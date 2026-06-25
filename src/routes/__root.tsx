@@ -77,14 +77,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
+      { title: "AI-Productivity-Assistant" },
+      { name: "description", content: "This project demonstrates how artificial intelligence can improve workplace productivity by automating repetitive tasks such as email drafting, meeting note sum" },
       { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { property: "og:title", content: "AI-Productivity-Assistant" },
+      { property: "og:description", content: "This project demonstrates how artificial intelligence can improve workplace productivity by automating repetitive tasks such as email drafting, meeting note sum" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "AI-Productivity-Assistant" },
+      { name: "twitter:description", content: "This project demonstrates how artificial intelligence can improve workplace productivity by automating repetitive tasks such as email drafting, meeting note sum" },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/2cde46a1-4fca-4a16-b2b2-cdaf00393d6d/id-preview-0c133b7c--b91e748a-de9d-4f8a-889d-92f0da2dae79.lovable.app-1782376923700.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/2cde46a1-4fca-4a16-b2b2-cdaf00393d6d/id-preview-0c133b7c--b91e748a-de9d-4f8a-889d-92f0da2dae79.lovable.app-1782376923700.png" },
     ],
     links: [
       {
