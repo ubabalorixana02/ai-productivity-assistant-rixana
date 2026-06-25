@@ -1,6 +1,8 @@
 import { createServerFn } from "@tanstack/react-start";
 import { generateText } from "ai";
+import { z } from "zod";
 import { createLovableAiGatewayProvider } from "@/lib/ai-gateway.server";
+import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 
 const MODEL = "google/gemini-3-flash-preview";
 
@@ -10,10 +12,23 @@ function getGateway() {
   return createLovableAiGatewayProvider(key);
 }
 
+const EmailInput = z.object({
+  recipient: z.string().trim().min(1).max(200),
+  purpose: z.string().trim().min(1).max(2000),
+  tone: z.enum(["Formal", "Friendly", "Persuasive"]),
+});
+
+const MeetingInput = z.object({
+  notes: z.string().trim().min(1).max(20000),
+});
+
+const TasksInput = z.object({
+  tasks: z.string().trim().min(1).max(10000),
+});
+
 export const generateEmail = createServerFn({ method: "POST" })
-  .inputValidator(
-    (input: { recipient: string; purpose: string; tone: string }) => input,
-  )
+  .middleware([requireSupabaseAuth])
+  .inputValidator((input: unknown) => EmailInput.parse(input))
   .handler(async ({ data }) => {
     const gateway = getGateway();
     const { text } = await generateText({
@@ -26,7 +41,8 @@ export const generateEmail = createServerFn({ method: "POST" })
   });
 
 export const summarizeMeeting = createServerFn({ method: "POST" })
-  .inputValidator((input: { notes: string }) => input)
+  .middleware([requireSupabaseAuth])
+  .inputValidator((input: unknown) => MeetingInput.parse(input))
   .handler(async ({ data }) => {
     const gateway = getGateway();
     const { text } = await generateText({
@@ -39,7 +55,8 @@ export const summarizeMeeting = createServerFn({ method: "POST" })
   });
 
 export const planTasks = createServerFn({ method: "POST" })
-  .inputValidator((input: { tasks: string }) => input)
+  .middleware([requireSupabaseAuth])
+  .inputValidator((input: unknown) => TasksInput.parse(input))
   .handler(async ({ data }) => {
     const gateway = getGateway();
     const { text } = await generateText({
